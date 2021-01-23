@@ -1,0 +1,262 @@
+﻿@page "/rentalinvestmentcalculator"
+
+@using RaptorRentals.Data;
+
+@inject IJSRuntime iJSRuntime;
+@inject NavigationManager navManager;
+@inject ApplicationDbContext _context;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h1 style="text-align:center; margin-bottom: 30px;">Rental Investment Calculator</h1>
+
+<div style="text-align: center;">
+    <EditForm Model="@investment" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="card-group" style="flex;">
+            <div class="card">
+                <h2 class="card-header">Property Information</h2>
+                <p>
+                    <label>
+                        Home Name
+                        <InputText @bind-Value="investment.HomeName" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Home Address
+                        <InputText @bind-Value="investment.HomeAddress" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Purchase Price($)
+                        <InputNumber @bind-Value="investment.PurchasePrice" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Down Payment(%)
+                        <InputNumber @bind-Value="investment.DownPayment" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Closing Costs($)
+                        <InputNumber @bind-Value="investment.ClosingCost" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Estimated Repair Cost($)
+                        <InputNumber @bind-Value="investment.EstimatedRepairCost" />
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Interest Rate(%)
+                        <InputNumber @bind-Value="investment.InterestRate" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Loan Length(Years)
+                        <InputNumber @bind-Value="investment.LoanLength" />
+                    </label>
+                </p>
+            </div>
+            <div class="card">
+                <h2 class="card-header">Property Monthly Expenses</h2>
+                <p>
+                    <label>
+                        Insurance($)
+                        <InputNumber @bind-Value="investment.Insurance" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Taxes($)
+                        <InputNumber @bind-Value="investment.Taxes" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        HOA($)
+                        <InputNumber @bind-Value="investment.HOA" />
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Maintenance(%)
+                        <InputNumber @bind-Value="investment.Maintenance">%</InputNumber>
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Vacancy(%)
+                        <InputNumber @bind-Value="investment.Vacancy">%</InputNumber>
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Capital Expenditure(%)
+                        <InputNumber @bind-Value="investment.CapitalExpenditure">%</InputNumber>
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Property Management(%)
+                        <InputNumber @bind-Value="investment.PropertyManagement">%</InputNumber>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-header">Income</h2>
+            <p>
+                <label>
+                    Anticipated Rent($)
+                    <InputNumber @bind-Value="investment.Income" />
+                </label>
+            </p>
+        </div>
+        <div style="padding: 15px">
+            <button class="btn btn-primary"
+                    type="submit" style="justify-self:center;">
+                Calculate
+            </button>
+        </div>
+    </EditForm>
+</div>
+
+<div id="results" style="margin-top: 30px;">
+    <h2 style="">Results</h2>
+    <table class="styled-table">
+        <tbody>
+            <tr>
+                <td>
+                    Initial Capital Needed
+                </td>
+                <td>
+                    $@investment.DisplayMoney(investment.InitialCapitalNeeded)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mortgage Payment
+                </td>
+                <td>
+                    $@investment.DisplayMoney(investment.MortgagePayment)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Income
+                </td>
+                <td>
+                    $@investment.DisplayMoney(investment.Income)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expenses
+                </td>
+                <td>
+                    $@investment.DisplayMoney(investment.Expenses)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cash Flow
+                </td>
+                <td>
+                    $@investment.DisplayMoney(investment.CashFlow)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cash on Cash
+                </td>
+                <td>
+                    %@investment.DisplayMoney(investment.CashOnCash)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="text-align:center; padding-bottom: 30px">
+
+    <AuthorizeView>
+        <Authorized>
+            @if (clicked)
+            {
+                <button @onclick="() => HandleDatabaseSubmit(context.User.Identity.Name)" class="btn btn-primary">Add Investment to Account</button>
+                <button @onclick="DownloadExcel" class="btn btn-primary">Download Excel</button>
+
+            }
+        </Authorized>
+        <NotAuthorized>
+            Please login to save your investment!
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+
+
+@code {
+
+
+    private RentalInvestment investment = new RentalInvestment() { Date = DateTime.UtcNow };
+    private bool clicked = false;
+
+    private void HandleValidSubmit()
+    {
+        //TODO: Set up object to be inserted into database
+        //check if logged in, then submit rental property into account
+
+        clicked = true;
+        investment.SolveMortgage();
+        investment.SolveCashFlow();
+        investment.SolveCashOnCash();
+
+        iJSRuntime.InvokeVoidAsync("ScrollTo", "results");
+    }
+
+    private async void HandleDatabaseSubmit(string userAccount)
+    {
+
+        try
+        {
+
+            investment.UserAccount = userAccount;
+            _context.Rentals.Add(investment);
+            await _context.SaveChangesAsync();
+        }
+        catch
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "There was an issue adding the investment to your account," +
+                "please try again!");
+            base.StateHasChanged();
+        }
+        await iJSRuntime.InvokeVoidAsync("alert", "Rental Investment successfully added to your account!");
+        base.StateHasChanged();
+        navManager.NavigateTo("MyRentals");
+    }
+
+    private void DownloadExcel()
+    {
+        investment.GenerateExcel(iJSRuntime);
+    }
+}

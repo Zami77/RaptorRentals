@@ -1,0 +1,21 @@
+﻿@page "/MyRentals"
+
+@using RaptorRentals.Data;
+
+@inject IJSRuntime iJSRuntime;
+@inject ApplicationDbContext _context;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <div class="card-group">
+        @foreach (var rental in _context.Rentals.Where(u => u.UserAccount == context.User.Identity.Name))
+        {
+            <div class="card; col-6" >
+                Home Name:@rental.HomeName
+            </div>
+        }
+    </div>
+</AuthorizeView>
+@code {
+    
+}
