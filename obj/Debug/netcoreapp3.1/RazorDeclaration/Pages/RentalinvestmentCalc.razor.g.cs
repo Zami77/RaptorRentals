@@ -100,9 +100,6 @@ using RaptorRentals.Data;
 
     private void HandleValidSubmit()
     {
-        //TODO: Set up object to be inserted into database
-        //check if logged in, then submit rental property into account
-
         clicked = true;
         investment.SolveMortgage();
         investment.SolveCashFlow();

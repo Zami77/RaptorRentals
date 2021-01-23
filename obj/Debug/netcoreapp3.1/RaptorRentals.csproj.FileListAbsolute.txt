@@ -209,3 +209,5 @@ D:\Blazor\RaptorRentals\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\Razor\Pages\_ValidationScriptsPartial.cshtml.g.cs
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyRentals.razor.g.cs
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\Razor\Pages\MyRentals.razor.g.cs
+D:\Blazor\RaptorRentals\bin\Debug\netcoreapp3.1\SendGrid.dll
+D:\Blazor\RaptorRentals\bin\Debug\netcoreapp3.1\StarkbankEcdsa.dll
