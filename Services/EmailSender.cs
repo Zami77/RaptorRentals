@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using RaptorRentals.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
 using System.Threading.Tasks;
 
 namespace RaptorRentals.Services
@@ -23,13 +24,14 @@ namespace RaptorRentals.Services
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
+            Console.WriteLine("SendGrid Message");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("Joe@contoso.com", Options.SendGridUser),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
+                From = new EmailAddress("TheRaptorRentals@gmail.com", "Raptor Rentals"),
+                Subject = subject + " - Rental Raptor",
+                PlainTextContent = message + "\nThank you!\nRaptor Rental Team",
+                HtmlContent = message + "\nThank you!<br/>Raptor Rental Team"
             };
             msg.AddTo(new EmailAddress(email));
 
