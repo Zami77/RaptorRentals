@@ -11,7 +11,7 @@
     <div class="row">
         @foreach (var rental in _context.Rentals.Where(u => u.UserAccount == context.User.Identity.Name))
         {
-        <div class="col-sm-4" style="height: 100%; width: auto">
+        <div class="col-lg-4">
             <div class="card" style="padding: 10px">
                     <h2 class="card-header">@rental.HomeName</h2>
                     <p class="card-text">
