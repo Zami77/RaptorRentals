@@ -10,5 +10,6 @@
     <WebStackScaffolding_DbContextTypeFullName>RaptorRentals.Data.ApplicationDbContext</WebStackScaffolding_DbContextTypeFullName>
     <_SelectedScaffolderID>IdentityScaffolder</_SelectedScaffolderID>
     <_SelectedScaffolderCategoryPath>root/Identity</_SelectedScaffolderCategoryPath>
+    <NameOfLastUsedPublishProfile>RaptorRentals - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

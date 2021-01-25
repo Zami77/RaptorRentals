@@ -1,8 +1,16 @@
 {
   "dependencies": {
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure__SignalR__ConnectionString"
+    },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "DefaultConnection"
+      "connectionId": "DeployConnection"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
     }
   }
 }

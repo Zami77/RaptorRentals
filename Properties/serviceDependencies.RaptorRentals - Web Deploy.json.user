@@ -1,0 +1,73 @@
+{
+  "dependencies": {
+    "signalr1": {
+      "restored": true,
+      "restoreTime": "2021-01-25T01:47:31.8072555Z"
+    },
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2021-01-25T06:54:31.2211716Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2021-01-25T06:44:59.6656924Z"
+    }
+  },
+  "parameters": {
+    "RaptorRentals.resourceGroupName": {
+      "Name": "RaptorRentals.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Raptor-Rentals"
+    },
+    "RaptorRentals.resourceGroupLocation": {
+      "Name": "RaptorRentals.resourceGroupLocation",
+      "Type": null,
+      "Value": "westus2"
+    },
+    "subscriptionId": {
+      "Name": "subscriptionId",
+      "Type": "subscription",
+      "Value": "ad723e98-c759-43ce-88a0-f2af10d1a5e0"
+    },
+    "signalr1.resourceGroupName": {
+      "Name": "signalr1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Raptor-Rentals"
+    },
+    "RaptorRentals.subscriptionId": {
+      "Name": "RaptorRentals.subscriptionId",
+      "Type": "subscription",
+      "Value": "ad723e98-c759-43ce-88a0-f2af10d1a5e0"
+    },
+    "secrets1.subscriptionId": {
+      "Name": "secrets1.subscriptionId",
+      "Type": "subscription",
+      "Value": "ad723e98-c759-43ce-88a0-f2af10d1a5e0"
+    },
+    "RaptorRentals.resourceName": {
+      "Name": "RaptorRentals.resourceName",
+      "Type": null,
+      "Value": "RaptorRentals"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Raptor-Rentals"
+    },
+    "secrets1.resourceGroupName": {
+      "Name": "secrets1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Raptor-Rentals"
+    },
+    "signalr1.subscriptionId": {
+      "Name": "signalr1.subscriptionId",
+      "Type": "subscription",
+      "Value": "ad723e98-c759-43ce-88a0-f2af10d1a5e0"
+    },
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "ad723e98-c759-43ce-88a0-f2af10d1a5e0"
+    }
+  }
+}

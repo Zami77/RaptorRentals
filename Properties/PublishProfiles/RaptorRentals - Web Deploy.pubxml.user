@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAEmCh0rqxCE29Gu4nu8m8BgAAAAACAAAAAAAQZgAAAAEAACAAAADjWT1iDrVtqRvFAiBSV+gWItPHeKzhEC2DLMECpa9tpAAAAAAOgAAAAAIAACAAAAA0hhllM/p4iRPwqloQQ5SumYLh70RJAeT2HIP+5HMlB4AAAAAuHwNQkVf2pY2Mhy3dl95cUYZAXRJTqW0vhOquZQh9IR28BQDsv7SW8DBgTTp+GexkJIspvEw2n+zO59a3x976iETcUwmLUqhwfKa0F1bsMIOMA9p1v74g0HY1vfMfCEHxDnG01tnG/2AcZnNwK9Xpwkiqf8t6M4RzoBjpXRL0q0AAAAARxmgl+l86S4K8lvQ5taLOyupAN989HtJ+T5lFgtCSpRgTVyJeH82ZeZyftH3vj0WR7O8fHF857T1QxqDZoJVo</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DeployConnection">
+      <Value>Data Source=tcp:raptorrentalsdbserver.database.windows.net,1433%3bInitial Catalog=RaptorRentals_db%3bUser Id=RaptorRentalAdmin%40raptorrentalsdbserver%3bPassword=#Dragon_Chunk_66</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
