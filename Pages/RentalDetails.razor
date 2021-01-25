@@ -1,0 +1,107 @@
+﻿@page "/RentalDetails/{rentalId:int}"
+
+@using RaptorRentals.Data;
+
+@inject IJSRuntime iJSRuntime;
+@inject NavigationManager navManager;
+@inject ApplicationDbContext _context;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@{ 
+    RentalInvestment rental = _context.Rentals.Where(r => r.Id == rentalId).FirstOrDefault();
+}
+<AuthorizeView>
+    <Authorized>
+        @if (rental.UserAccount == context.User.Identity.Name)
+        {
+            <h2>@rental.HomeName</h2>
+                
+            <div class="row">
+                <p class="col-3">
+                    <dt>Address</dt> @rental.HomeAddress
+                </p>
+                <p class="col-3">
+                    <dt>Purchase Price</dt> $@rental.DisplayMoney(rental.PurchasePrice)
+                </p>
+                <p class="col-3">
+                    <dt>Down Payment</dt> %@rental.DisplayMoney(rental.DownPayment) &emsp; $@rental.DisplayMoney(rental.DownPayment / 100 * rental.PurchasePrice)
+                </p>
+                <p class="col-3">
+                    <dt>Closing Costs</dt> $@rental.DisplayMoney(rental.ClosingCost)
+                </p>
+                <p class="col-3">
+                    <dt>Repair Costs</dt> $@rental.DisplayMoney(rental.EstimatedRepairCost)
+                </p>
+                <p class="col-3">
+                    <dt>Interest Rate</dt> %@rental.DisplayMoney(rental.InterestRate)
+                </p>
+                <p class="col-3">
+                    <dt>Loan Length</dt> @rental.LoanLength years
+                </p>
+                <p class="col-3">
+                    <dt>Loan Amount</dt> $@rental.DisplayMoney(rental.LoanAmount)
+                </p>
+                <p class="col-3">
+                    <dt>Insurance Amount</dt> $@rental.DisplayMoney(rental.Insurance)
+                </p>
+                <p class="col-3">
+                    <dt>Taxes</dt> $@rental.DisplayMoney(rental.Taxes)
+                </p>
+                <p class="col-3">
+                    <dt>HOA</dt> $@rental.DisplayMoney(rental.HOA)
+                </p>
+                <p class="col-3">
+                    <dt>Maintenance</dt> %@rental.DisplayMoney(rental.Maintenance) &emsp; $@rental.DisplayMoney(rental.Maintenance / 100 * rental.Income)
+                </p>
+                <p class="col-3">
+                    <dt>Vacancy</dt> %@rental.DisplayMoney(rental.Vacancy) &emsp; $@rental.DisplayMoney(rental.Vacancy / 100 * rental.Income)
+                </p>
+                <p class="col-3">
+                    <dt>Capital Expenditure</dt> %@rental.DisplayMoney(rental.CapitalExpenditure) &emsp; $@rental.DisplayMoney(rental.CapitalExpenditure / 100 * rental.Income)
+                </p>
+                <p class="col-3">
+                    <dt>Property Management</dt> %@rental.DisplayMoney(rental.PropertyManagement) &emsp; $@rental.DisplayMoney(rental.PropertyManagement / 100 * rental.Income)
+                </p>
+
+                <p class="col-3">
+                    <dt>Initial Capital</dt> $@rental.DisplayMoney(rental.InitialCapitalNeeded)
+                </p>
+                <p class="col-3">
+                    <dt>Loan Amount</dt> $@rental.DisplayMoney(rental.LoanAmount)
+                </p>
+                <p class="col-3">
+                    <dt>Expenses</dt> $@rental.DisplayMoney(rental.Expenses)
+                </p>
+                <p class="col-3">
+                    <dt>Income</dt> $@rental.DisplayMoney(rental.Income)
+                </p>
+                <p class="col-3">
+                    <dt>Cash Flow</dt> $@rental.DisplayMoney(rental.CashFlow)
+                </p>
+                <p class="col-3">
+                    <dt>Cash on Cash</dt> %@rental.DisplayMoney(rental.CashOnCash)
+                </p>
+            </div>
+            <div class="row; text-center">
+                <button @onclick="NavToEditRental" class="btn btn-warning">Edit</button>
+                <button @onclick="NavToMyRentals" class="btn btn-primary">Back to Rentals</button>
+            </div>
+        }
+        else
+        {
+            <p>
+                You don't have permission to view this rental investment.
+            </p>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please login!</p>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public int rentalId { get; set; }
+
+    void NavToMyRentals() => navManager.NavigateTo("/MyRentals");
+    void NavToEditRental() => navManager.NavigateTo($"/EditRental/{rentalId}");
+}

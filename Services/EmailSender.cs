@@ -31,7 +31,7 @@ namespace RaptorRentals.Services
                 From = new EmailAddress("TheRaptorRentals@gmail.com", "Raptor Rentals"),
                 Subject = subject + " - Rental Raptor",
                 PlainTextContent = message + "\nThank you!\nRaptor Rental Team",
-                HtmlContent = message + "\nThank you!<br/>Raptor Rental Team"
+                HtmlContent = message + "<br/>Thank you,<br/>Raptor Rental Team"
             };
             msg.AddTo(new EmailAddress(email));
 

@@ -76,14 +76,14 @@ using RaptorRentals.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\Blazor\RaptorRentals\Pages\MyRentals.razor"
+#line 3 "D:\Blazor\RaptorRentals\Pages\EditRental.razor"
 using RaptorRentals.Data;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/MyRentals")]
-    public partial class MyRentals : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/EditRental/{rentalId:int}")]
+    public partial class EditRental : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -91,19 +91,45 @@ using RaptorRentals.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "D:\Blazor\RaptorRentals\Pages\MyRentals.razor"
-       
-    private void DetailRental(int rentalId)
-    {
-        navManager.NavigateTo($"/RentalDetails/{rentalId}");
-    }
+#line 160 "D:\Blazor\RaptorRentals\Pages\EditRental.razor"
+           
+        [Parameter]
+        public int rentalId { get; set; }
+
+        RentalInvestment investment;
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            investment = _context.Rentals.Where(r => r.Id == rentalId).FirstOrDefault();
+        }
+
+        private async void HandleValidSubmit()
+        {
+            try
+            {
+                investment.Date = DateTime.Now;
+                _context.Rentals.Update(investment);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                await iJSRuntime.InvokeVoidAsync("alert", "There was an issue updating the investment to your account," +
+                    "please try again!");
+                base.StateHasChanged();
+            }
+            await iJSRuntime.InvokeVoidAsync("alert", "Rental investment successfully updated!");
+            base.StateHasChanged();
+            navManager.NavigateTo("MyRentals");
+        }
+    
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ApplicationDbContext _context { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime iJSRuntime { get; set; }
     }
 }

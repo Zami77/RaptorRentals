@@ -220,3 +220,7 @@ D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RaptorRentals.dll
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RaptorRentals.pdb
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RaptorRentals.genruntimeconfig.cache
 D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RaptorRentals.csprojAssemblyReference.cache
+D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\RentalDetails.razor.g.cs
+D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\Razor\Pages\RentalDetails.razor.g.cs
+D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\EditRental.razor.g.cs
+D:\Blazor\RaptorRentals\obj\Debug\netcoreapp3.1\Razor\Pages\EditRental.razor.g.cs

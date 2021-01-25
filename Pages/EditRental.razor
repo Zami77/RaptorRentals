@@ -1,0 +1,190 @@
+﻿@page "/EditRental/{rentalId:int}"
+
+@using RaptorRentals.Data;
+
+@inject IJSRuntime iJSRuntime;
+@inject NavigationManager navManager;
+@inject ApplicationDbContext _context;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>EditRental</h3>
+
+<div style="text-align: center;">
+    <AuthorizeView>
+        <Authorized>
+            @if (context.User.Identity.Name == investment.UserAccount)
+            {
+            <EditForm Model="@investment" OnValidSubmit="@HandleValidSubmit" Context="editContext">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="card-group" style="flex;">
+                    <div class="card">
+                        <h2 class="card-header">Property Information</h2>
+                        <p>
+                            <label>
+                                Home Name
+                                <InputText @bind-Value="investment.HomeName" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Home Address
+                                <InputText @bind-Value="investment.HomeAddress" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Purchase Price($)
+                                <InputNumber @bind-Value="investment.PurchasePrice" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Down Payment(%)
+                                <InputNumber @bind-Value="investment.DownPayment" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Closing Costs($)
+                                <InputNumber @bind-Value="investment.ClosingCost" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Estimated Repair Cost($)
+                                <InputNumber @bind-Value="investment.EstimatedRepairCost" />
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                Interest Rate(%)
+                                <InputNumber @bind-Value="investment.InterestRate" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Loan Length(Years)
+                                <InputNumber @bind-Value="investment.LoanLength" />
+                            </label>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-header">Property Monthly Expenses</h2>
+                        <p>
+                            <label>
+                                Insurance($)
+                                <InputNumber @bind-Value="investment.Insurance" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Taxes($)
+                                <InputNumber @bind-Value="investment.Taxes" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                HOA($)
+                                <InputNumber @bind-Value="investment.HOA" />
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Maintenance(%)
+                                <InputNumber @bind-Value="investment.Maintenance">%</InputNumber>
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Vacancy(%)
+                                <InputNumber @bind-Value="investment.Vacancy">%</InputNumber>
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Capital Expenditure(%)
+                                <InputNumber @bind-Value="investment.CapitalExpenditure">%</InputNumber>
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                Property Management(%)
+                                <InputNumber @bind-Value="investment.PropertyManagement">%</InputNumber>
+                            </label>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2 class="card-header">Income</h2>
+                    <p>
+                        <label>
+                            Anticipated Rent($)
+                            <InputNumber @bind-Value="investment.Income" />
+                        </label>
+                    </p>
+                </div>
+                <div style="padding: 15px">
+                    <button class="btn btn-primary"
+                            type="submit" style="justify-self:center;">
+                        Save
+                    </button>
+                </div>
+            </EditForm>
+            }
+            else
+            {
+                <p>
+                    You do not have permissions to edit this rental.
+                </p>
+            }
+        </Authorized>
+        <NotAuthorized>
+            Please login!
+        </NotAuthorized>
+    </AuthorizeView>
+    
+</div>
+    @code {
+        [Parameter]
+        public int rentalId { get; set; }
+
+        RentalInvestment investment;
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            investment = _context.Rentals.Where(r => r.Id == rentalId).FirstOrDefault();
+        }
+
+        private async void HandleValidSubmit()
+        {
+            try
+            {
+                investment.Date = DateTime.Now;
+                _context.Rentals.Update(investment);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                await iJSRuntime.InvokeVoidAsync("alert", "There was an issue updating the investment to your account," +
+                    "please try again!");
+                base.StateHasChanged();
+            }
+            await iJSRuntime.InvokeVoidAsync("alert", "Rental investment successfully updated!");
+            base.StateHasChanged();
+            navManager.NavigateTo("MyRentals");
+        }
+    }

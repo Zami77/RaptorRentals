@@ -5,17 +5,36 @@
 @inject IJSRuntime iJSRuntime;
 @inject ApplicationDbContext _context;
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navManager;
 
 <AuthorizeView>
-    <div class="card-group">
+    <div class="row">
         @foreach (var rental in _context.Rentals.Where(u => u.UserAccount == context.User.Identity.Name))
         {
-            <div class="card; col-6" >
-                Home Name:@rental.HomeName
+        <div class="col-sm-4" style="height: 100%; width: auto">
+            <div class="card" style="padding: 10px">
+                    <h2 class="card-header">@rental.HomeName</h2>
+                    <p class="card-text">
+                        <b>Address:</b> @rental.HomeAddress
+                    </p>
+                    <p>
+                        <b>Purchase Price:</b> $@rental.DisplayMoney(rental.PurchasePrice)
+                    </p>
+                    <p class="card-text">
+                        <b>Cash Flow:</b> $@rental.DisplayMoney(rental.CashFlow)
+                    </p>
+                    <p class="card-text">
+                        <b>Cash on Cash:</b> %@rental.DisplayMoney(rental.CashOnCash)
+                    </p>
+                <button @onclick="() => DetailRental(rental.Id)" class="btn btn-primary">More Details</button>
             </div>
+        </div>
         }
     </div>
 </AuthorizeView>
 @code {
-    
+    private void DetailRental(int rentalId)
+    {
+        navManager.NavigateTo($"/RentalDetails/{rentalId}");
+    }
 }
